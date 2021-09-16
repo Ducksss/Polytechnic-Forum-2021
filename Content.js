@@ -1,27 +1,25 @@
-// let willSmithImages = [
-//     "https://picsum.photos/id/1/200/300",
-//     "https://picsum.photos/id/1/200/300",
-//     "https://picsum.photos/id/1/200/300",
-//     "https://picsum.photos/id/1/200/300",
-//     "https://picsum.photos/id/1/200/300",
-//     "https://picsum.photos/id/1/200/300",
-//     "https://picsum.photos/id/1/200/300",
-//     "https://picsum.photos/id/1/200/300",
-// ]
+let willSmithImages = [
+    "https://picsum.photos/id/1/200/300",
+    "https://picsum.photos/id/1/200/300",
+    "https://picsum.photos/id/1/200/300",
+    "https://picsum.photos/id/1/200/300",
+    "https://picsum.photos/id/1/200/300",
+    "https://picsum.photos/id/1/200/300",
+    "https://picsum.photos/id/1/200/300",
+    "https://picsum.photos/id/1/200/300",
+]
 
 // simple tester
-// var seeIfCodeIsWorking = (function () {
-//     const imgs = document.getElementsByTagName("img");
-//     for (let i = 0; i < imgs.length; i++) {
-//         const randomImg = Math.floor(Math.random() * willSmithImages.length);
-//         imgs[i].src = willSmithImages[randomImg];
-//     }
+const imgs = document.getElementsByTagName("img");
+for (let i = 0; i < imgs.length; i++) {
+    const randomImg = Math.floor(Math.random() * willSmithImages.length);
+    imgs[i].src = willSmithImages[randomImg];
+}
 
-//     const headers = document.getElementsByTagName("h1");
-//     for (let i = 0; i < headers.length; i++) {
-//         headers[i].innerText = "Pedro is Awesome";
-//     }
-// })()
+const headers = document.getElementsByTagName("h1");
+for (let i = 0; i < headers.length; i++) {
+    headers[i].innerText = "Pedro is Awesome";
+}
 
 // Function to get tweet content
 // var getTweet = (function () {
@@ -57,6 +55,10 @@ const addPositiveReinforcement = function () {
             // let details = await selectDOM().catch((error) => { console.log(error) })
             let details = document.getElementsByClassName("_1rcM18");
 
+            if (!details) {
+                setInterval(brain, 2000)
+                resolve("failure")
+            }
             var newNode = document.createElement('div');
             newNode.innerHTML = `
                             <!-- POSITIVE -->
@@ -90,6 +92,9 @@ const addNegativeReinforcement = function () {
         try {
             var details = await selectDOM().catch((error) => { console.log(error) })
             details = document.getElementsByClassName("_1rcM18");
+            if (!details) {
+                brain()
+            }
 
             var newNode = document.createElement('div');
             newNode.innerHTML = `
@@ -120,6 +125,7 @@ const addNegativeReinforcement = function () {
 }
 
 document.addEventListener('readystatechange', async event => {
+
     // When HTML/DOM elements are ready:
     if (event.target.readyState === "interactive") {   //does same as:  ..addEventListener("DOMContentLoaded"..
         alert("hi 1");
@@ -127,18 +133,25 @@ document.addEventListener('readystatechange', async event => {
 
     // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
     if (event.target.readyState === "complete") {
-        await brain();
+        await brain()
+            .then(() => {
+                setInterval(() => brain, 1000);
+            })
+            .catch((error) => {
+                setInterval(() => brain, 1000);
+            })
     }
 });
 
 const brain = async function () {
     try {
+        console.log("POOP");
         const details = await selectDOM().catch((e) => { console.log(e) });
 
         if ((!details) && initialised2 && initialised2) {
             setTimeout(() => brain, 2000);
         } else {
-            await addNegativeReinforcement()
+            await addPositiveReinforcement()
                 .then(message => {
                     console.log(message)
                 })
@@ -150,5 +163,3 @@ const brain = async function () {
         console.log(e)
     }
 }
-
-setInterval(() => brain, 1000);
