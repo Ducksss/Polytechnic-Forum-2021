@@ -49,13 +49,13 @@ const addPositiveReinforcement = async function () {
             let details = await selectDOM().catch((error) => { console.log(error) })
 
             if (!details) {
-                brain();
                 resolve("failure")
             } else {
                 var newNode = document.createElement('div');
                 newNode.innerHTML = `
                                     <div class="attM6y"
-                                        style="border: 1px solid var(--petalc); color: var(--petalc); background: #CBF0C1; /* padding: 1rem; */ font: 0.9rem sans-serif; width: 100%; margin-bottom: 1rem; padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem;">
+                                        style="border: 1px solid var(--petalc); color: var(--petalc); background: #CBF0C1; font: 0.9rem sans-serif; width: 100%; margin-bottom: 1rem; padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem;"
+                                        data-aos="fade-right">
                                         <img src="https://res.cloudinary.com/sp-dit-chai-pin-zheng/image/upload/v1631808781/nr7odyahwxd7qdavcpfh.png"
                                             style="height: 17px; width: 17px;">
                                         Did you know that the manufacturer of "${globalProductName}", "${globalBrandName}" used -${goodCompanies[globalBrandName].toFixed(2)}% less water in its manufacturing plant in 2020 as compared to 2019?
@@ -80,7 +80,6 @@ const addNegativeReinforcement = async function () {
             let details = await selectDOM().catch((error) => { console.log(error) })
 
             if (!details) {
-                brain();
                 resolve("failure")
             } else {
                 var newNode = document.createElement('div');
@@ -111,7 +110,6 @@ const decider = async function () {
             let details = await selectDOM2().catch((error) => { console.log(error) })
 
             if (!details) {
-                brain();
                 resolve("failure")
             } else {
                 let isGood = false;
@@ -132,6 +130,7 @@ const decider = async function () {
                         break;
                     }
                 }
+                
                 resolve([isGood, isBad])
             }
         } catch (error) {
@@ -144,43 +143,38 @@ const decider = async function () {
 document.addEventListener('readystatechange', async event => {
     // When HTML/DOM elements are ready:
     if (event.target.readyState === "interactive") {   //does same as:  ..addEventListener("DOMContentLoaded"..
-        alert("hi 1");
+        setTimeout(brain, 0);
     }
 
     // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
     if (event.target.readyState === "complete") {
-        setTimeout(brain, 1500);
+        setTimeout(brain, 0);
     }
 });
 
 const brain = async function () {
     try {
-        const details = await selectDOM().catch((e) => { console.log(e) });
-        console.log("Pass 1");
+        await decider()
+            .then(async (results) => {
+                let [isGood, isBad] = results
 
-        if ((!details) && initialised2 && initialised2) {
-            console.log("Fail 1");
-            setTimeout(() => brain, 2000);
-        } else {
-            console.log("Pass 2");
-            await decider()
-                .then(async (results) => {
-                    let [isGood, isBad] = results
+                // render if not so good company
+                if (isGood) {
+                    await addPositiveReinforcement()
+                        .then((message) => { console.log(message) })
+                        .catch((error) => { setTimeout(() => brain, 500); })
+                }
 
-                    if (isGood) {
-                        await addPositiveReinforcement()
-                            .then((message) => { console.log(message) })
-                            .catch((error) => { setTimeout(() => brain, 1000); })
-                    }
+                // render if not so ethetical company
+                if (isBad) {
+                    await addNegativeReinforcement()
+                        .then((message) => { console.log(message) })
+                        .catch((error) => { setTimeout(() => brain, 500); })
+                }
 
-                    if (isBad) {
-                        await addNegativeReinforcement()
-                            .then((message) => { console.log(message) })
-                            .catch((error) => { setTimeout(() => brain, 1000); })
-                    }
-                })
-                .catch((error) => { setTimeout(() => brain, 2000); })
-        }
+                //else just do nothing and print nothing :)
+            })
+            .catch((error) => { setTimeout(() => brain, 500); })
     } catch (e) {
         console.log(e)
     }
