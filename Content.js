@@ -45,6 +45,7 @@ const addPositiveReinforcement = function () {
         try {
             const details = document.getElementsByClassName("_1rcM18");
             var newNode = document.createElement('div');
+
             newNode.innerHTML = `
                         <div class="attM6y" style="
                             background: background: rgba(249,145,146,0.3);
@@ -59,6 +60,7 @@ const addPositiveReinforcement = function () {
                             and better! Keep it up!
                         </div>
                         `;
+
             initialised1 = true;
             resolve(newNode)
         } catch (error) {
@@ -70,6 +72,7 @@ const addPositiveReinforcement = function () {
 const addNegativeReinforcement = function () {
     const details = document.getElementsByClassName("_1rcM18");
     var newNode = document.createElement('div');
+
     newNode.innerHTML = `
                     <div class="attM6y" style="
                         background: background: rgba(249,145,146,0.3);;
@@ -85,17 +88,16 @@ const addNegativeReinforcement = function () {
                     </div>
                     `;
 
-    initialised1 = false;
+    initialised2 = true;
+    var newNode = document.createElement('div');
     details[0].prepend(newNode);
 }
 
 const brain = (async function () {
     const details = document.getElementsByClassName("_1rcM18");
 
-    if (!details) {
-        setInterval(() => {
-            brain()
-        }, 1000);
+    if ((!details) && initialised2 && initialised2) {
+        setInterval(() => { brain() }, 1000);
     } else {
         var newNode = document.createElement('div');
         newNode = await addPositiveReinforcement().catch(error => { console.log(error) })
