@@ -99,9 +99,7 @@ const brain = (async function () {
     if ((!details) && initialised2 && initialised2) {
         setInterval(() => { brain() }, 1000);
     } else {
-        var newNode = document.createElement('div');
         newNode = await addPositiveReinforcement().catch(error => { console.log(error) })
-        details[0].prepend(newNode);
     }
 })()
 
