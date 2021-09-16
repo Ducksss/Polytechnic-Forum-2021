@@ -40,61 +40,6 @@
 // })();
 
 let [initialised1, initialised2] = [false, false]
-const addPositiveReinforcement = function () {
-    return new Promise((resolve, reject) => {
-        try {
-            const details = document.getElementsByClassName("_1rcM18");
-            var newNode = document.createElement('div');
-
-            newNode.innerHTML = `
-                        <div class="attM6y" style="
-                            background: background: rgba(249,145,146,0.3);
-                            border: 1px solid var(--petalc);
-                            color:var(--petalc);
-                            background: #CBF0C1;
-                            padding:1rem;
-                            font:0.9rem sans-serif;
-                            width:100%;
-                            margin-bottom: 1rem;">
-                            "Hershey's Cookies n Creme Candy bar" consumes roughly 6.2 litres of water to manufacture... it is more sustainable
-                            and better! Keep it up!
-                        </div>
-                        `;
-
-            initialised1 = true;
-            var newNode = document.createElement('div');
-            details[0].prepend(newNode);
-            resolve("Success")
-        } catch (error) {
-            reject(error)
-        }
-    })
-}
-
-const addNegativeReinforcement = function () {
-    const details = document.getElementsByClassName("_1rcM18");
-    var newNode = document.createElement('div');
-
-    newNode.innerHTML = `
-                    <div class="attM6y" style="
-                        background: background: rgba(249,145,146,0.3);;
-                        border: 1px solid var(--petalc);
-                        color:var(--petalc);
-                        background: #FCDEDE;
-                        padding:1rem;
-                        font:0.9rem sans-serif;
-                        width:100%;
-                        margin-bottom: 1rem;">
-                        A "Kinder Bueno Chocolate" consumes roughly 12.4 litres of water to manufacture... it is very water intensive! Perhaps,
-                        you could try a different chocolate instead
-                    </div>
-                    `;
-
-    initialised2 = true;
-    var newNode = document.createElement('div');
-    details[0].prepend(newNode);
-    resolve("Success")
-}
 
 const selectDOM = function () {
     return new Promise((resolve, reject) => {
@@ -106,40 +51,104 @@ const selectDOM = function () {
     });
 }
 
-const brain = (async function () {
-    const details = await selectDOM().catch((e) => { console.log(e) });
+const addPositiveReinforcement = function () {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // let details = await selectDOM().catch((error) => { console.log(error) })
+            let details = document.getElementsByClassName("_1rcM18");
 
-    console.log("TESTING 123")
-    if ((!details) && initialised2 && initialised2) {
-        (() => { brain() });
-    } else {
-        newNode = await addPositiveReinforcement().catch(error => { console.log(error) })
+            var newNode = document.createElement('div');
+            newNode.innerHTML = `
+                            <!-- POSITIVE -->
+                            <div class="attM6y" style="
+                                background: background: rgba(249,145,146,0.3);
+                                border: 1px solid var(--petalc);
+                                color:var(--petalc);
+                                background: #CBF0C1;
+                                padding:1rem;
+                                font:0.9rem sans-serif;
+                                width:100%;
+                                margin-bottom: 1rem;">
+                                "Hershey's Cookies n Creme Candy bar" consumes roughly 6.2 litres of water to manufacture... it is more sustainable
+                                and better! Keep it up! In fact, the water consumed to produce fell by 19.3%!
+                            </div>
+                        `;
+
+            details[0].prepend(newNode);
+
+            initialised1 = true;
+            resolve("Success")
+        } catch (error) {
+            console.log(error)
+            reject(error)
+        }
+    })
+}
+
+const addNegativeReinforcement = function () {
+    return new Promise(async (resolve, reject) => {
+        try {
+            var details = await selectDOM().catch((error) => { console.log(error) })
+            details = document.getElementsByClassName("_1rcM18");
+
+            var newNode = document.createElement('div');
+            newNode.innerHTML = `
+                                <div class="attM6y" style="
+                                    background: background: rgba(249,145,146,0.3);
+                                    border: 1px solid var(--petalc);
+                                    color:var(--petalc);
+                                    background: #FCDEDE;
+                                    padding:1rem;
+                                    font:0.9rem sans-serif;
+                                    width:100%;
+                                    margin-bottom: 1rem;
+                                    /* padding-bottom: 1.7rem; */
+                                    ">
+                                    "Kinder Bueno Chocolate" consumes roughly 12.4 litres of water to manufacture... it is quite water intensive!
+                                    Moreover, the manifacturing on "Kinder Bueno Chocolate" has risen by 19.4% since 2012.
+                                </div>
+                            `;
+            details[0].prepend(newNode);
+
+            initialised2 = true;
+            resolve("Success")
+        } catch (error) {
+            console.log(error)
+            reject(error)
+        }
+    })
+}
+
+document.addEventListener('readystatechange', async event => {
+    // When HTML/DOM elements are ready:
+    if (event.target.readyState === "interactive") {   //does same as:  ..addEventListener("DOMContentLoaded"..
+        alert("hi 1");
     }
-})()
 
-// getWrapper = function () { return document.querySelectorAll('div[aria-label^="Timeline:"] > div')[0]; };
+    // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
+    if (event.target.readyState === "complete") {
+        await brain();
+    }
+});
 
-// waitFor(getWrapper, 1000, wrapper => wrapper !== undefined,
-//     function (wrapper) {
-//         console.log("everything loaded.")
-//         // First pass
-//         var tweets = wrapper.children;
-//         runScript(tweets);
-//         loadCss()
-//         // Observe for changes of wrapper's child nodes
-//         scanDiv(wrapper, function (el) {
+const brain = async function () {
+    try {
+        const details = await selectDOM().catch((e) => { console.log(e) });
 
-//             var addedNodes = [], removedNodes = [];
+        if ((!details) && initialised2 && initialised2) {
+            setTimeout(() => brain, 2000);
+        } else {
+            await addNegativeReinforcement()
+                .then(message => {
+                    console.log(message)
+                })
+                .catch(error => {
+                    setTimeout(() => brain, 1000);
+                })
+        }
+    } catch (e) {
+        console.log(e)
+    }
+}
 
-//             // Record down added divs
-//             el.forEach(record => record.addedNodes.length & addedNodes.push(...record.addedNodes))
-
-//             // Record down deleted divs
-//             // el.forEach(record => record.removedNodes.length & removedNodes.push(...record.removedNodes))
-
-//             // Run the script for added nodes
-//             runScript(addedNodes);
-
-//             // console.log('Added:', addedNodes, 'Removed:', removedNodes);
-//         });
-//     });
+setInterval(() => brain, 1000);

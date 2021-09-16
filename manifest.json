@@ -1,7 +1,14 @@
 {
-    "manifest_version": 2,
-    "name": "WaterConscious",
-    "version": "1.0.0",
+    "version": "0.1.0",
+    "manifest_version": 3,
+    "name": "Untouched Water",
+    "description": "Untouched Water is a browser extension that uses data to help you help users to make a better indecisions when it comes to consumerism!",
+    "icons": {
+        "16": "/images/waterLogo.png",
+        "32": "/images/waterLogo.png",
+        "48": "/images/waterLogo.png",
+        "128": "/images/waterLogo.png"
+    },
     "content_scripts": [{
         "matches": ["<all_urls>"],
         "js": ["Content.js"]
