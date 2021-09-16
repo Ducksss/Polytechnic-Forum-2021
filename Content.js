@@ -1,13 +1,13 @@
-let willSmithImages = [
-    "https://picsum.photos/id/1/200/300",
-    "https://picsum.photos/id/1/200/300",
-    "https://picsum.photos/id/1/200/300",
-    "https://picsum.photos/id/1/200/300",
-    "https://picsum.photos/id/1/200/300",
-    "https://picsum.photos/id/1/200/300",
-    "https://picsum.photos/id/1/200/300",
-    "https://picsum.photos/id/1/200/300",
-]
+// let willSmithImages = [
+//     "https://picsum.photos/id/1/200/300",
+//     "https://picsum.photos/id/1/200/300",
+//     "https://picsum.photos/id/1/200/300",
+//     "https://picsum.photos/id/1/200/300",
+//     "https://picsum.photos/id/1/200/300",
+//     "https://picsum.photos/id/1/200/300",
+//     "https://picsum.photos/id/1/200/300",
+//     "https://picsum.photos/id/1/200/300",
+// ]
 
 // simple tester
 // var seeIfCodeIsWorking = (function () {
@@ -62,7 +62,9 @@ const addPositiveReinforcement = function () {
                         `;
 
             initialised1 = true;
-            resolve(newNode)
+            var newNode = document.createElement('div');
+            details[0].prepend(newNode);
+            resolve("Success")
         } catch (error) {
             reject(error)
         }
@@ -91,13 +93,25 @@ const addNegativeReinforcement = function () {
     initialised2 = true;
     var newNode = document.createElement('div');
     details[0].prepend(newNode);
+    resolve("Success")
+}
+
+const selectDOM = function () {
+    return new Promise((resolve, reject) => {
+        try {
+            resolve(document.getElementsByClassName("_1rcM18"))
+        } catch (e) {
+            reject(e)
+        }
+    });
 }
 
 const brain = (async function () {
-    const details = document.getElementsByClassName("_1rcM18");
+    const details = await selectDOM().catch((e) => { console.log(e) });
 
+    console.log("TESTING 123")
     if ((!details) && initialised2 && initialised2) {
-        setInterval(() => { brain() }, 1000);
+        (() => { brain() });
     } else {
         newNode = await addPositiveReinforcement().catch(error => { console.log(error) })
     }
