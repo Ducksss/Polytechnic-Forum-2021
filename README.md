@@ -16,4 +16,4 @@ The folder can then be installed as a browser extension in Google Chrome or Micr
 This browser extension monitors your consumption behavior on Shopee.
 
 # Test cases
-Anything with the companies of "hp", "tic tac", "nutella", "ferrero", "kinder" and "asus"
+Anything with the companies of "nutella", "ferrero", and "kinder".
