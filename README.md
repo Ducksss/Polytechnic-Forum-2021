@@ -1,7 +1,5 @@
 # Polytechnic-Forum-2021
 
-Untouched Water is a browser extension that uses artificial intelligence and gamification to help you overcome doomscrolling: the all too familiar and tempting process of scrolling through bad news after bad news on your social media feeds, without realising the repercussions on your mental health.
-
 Untouched Water is a browser extension that uses data to help you help users to make a better indecisions when it comes to consumerism.
 
 Currently compatible with Shopee on desktop.
