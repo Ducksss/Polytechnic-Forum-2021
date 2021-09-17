@@ -1,5 +1,4 @@
 # Polytechnic-Forum-2021
-Polytechnic Forum 2021
 
 Untouched Water is a browser extension that uses artificial intelligence and gamification to help you overcome doomscrolling: the all too familiar and tempting process of scrolling through bad news after bad news on your social media feeds, without realising the repercussions on your mental health.
 
