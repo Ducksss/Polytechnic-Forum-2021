@@ -4,10 +4,10 @@
     "name": "Untouched Water",
     "description": "Untouched Water is a browser extension that uses data to help you help users to make a better indecisions when it comes to consumerism!",
     "icons": {
-        "16": "/images/waterLogo.png",
-        "32": "/images/waterLogo.png",
-        "48": "/images/waterLogo.png",
-        "128": "/images/waterLogo.png"
+        "16": "/images/waterLogo2.png",
+        "32": "/images/waterLogo2.png",
+        "48": "/images/waterLogo2.png",
+        "128": "/images/waterLogo2.png"
     },
     "content_scripts": [{
         "matches": ["<all_urls>"],
