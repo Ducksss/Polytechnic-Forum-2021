@@ -18,7 +18,8 @@ let goodCompanies = {
     "nutella": 3.1212312312,
     "ferrero": 4.1123123123,
     "kinder": 2.93,
-    "asus": 0.19
+    "asus": 0.19,
+    "ritter": 2.1123
 }
 
 const selectDOM = function () {
@@ -119,7 +120,6 @@ const loaderChecker = async function () {
         try {
             let details = await selectDOM3().catch((error) => { console.log(error) })
 
-            console.log(details)
             console.log("Triggered")
 
             if (details) {
